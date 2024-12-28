@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "684357062231",
+    "project_id": "firestore-437bf",
+    "storage_bucket": "firestore-437bf.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:684357062231:android:638198b146c8eed9f79d12",
+        "android_client_info": {
+          "package_name": "com.karan.firestore"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDndzC4jgT2F7dPOolVmjYMRDlpda54NN0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
