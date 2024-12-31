@@ -13,7 +13,7 @@ import kotlinx.coroutines.NonDisposableHandle.parent
 class recyclerAdapter(var array: ArrayList<Items>, private var recyclerBtn: Recycler_btn) :
     RecyclerView.Adapter<recyclerAdapter.ViewHolder>() {
     class ViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
-        val name: TextView = view.findViewById(R.id.etName)
+        val email: TextView = view.findViewById(R.id.et_Email)
         val claSs: TextView = view.findViewById(R.id.etClass)
         val number: TextView = view.findViewById(R.id.etNumber)
         val btn_del: Button = view.findViewById(R.id.btn_Delete)
@@ -34,7 +34,7 @@ class recyclerAdapter(var array: ArrayList<Items>, private var recyclerBtn: Recy
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = array[position]
-        holder.name.text=currentItem.name
+        holder.email.text=currentItem.Email
         holder.claSs.text=currentItem.Etclass
         holder.number.text=currentItem.number.toString().toInt().toString()
 

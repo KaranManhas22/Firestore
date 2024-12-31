@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -33,10 +34,12 @@ class MainActivity : AppCompatActivity(), Recycler_btn {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         var linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.recyclerList.layoutManager = linearLayoutManager
         binding.recyclerList.adapter = recyclerAdapter
         binding.recyclerList.setHasFixedSize(true)
+
 
         binding.btnFab.setOnClickListener {
             var dialogboxBinding = CustomDialogboxBinding.inflate(layoutInflater)
@@ -60,11 +63,10 @@ class MainActivity : AppCompatActivity(), Recycler_btn {
 
                         }
                         recyclerAdapter.notifyDataSetChanged()
-
+                        dismiss()
                     }
-                    dismiss()
-                }
 
+                }
                 show()
             }
 
@@ -122,7 +124,49 @@ class MainActivity : AppCompatActivity(), Recycler_btn {
 
     override fun update_data(tems: Items, position: Int) {
 
+        var dialogboxBinding = CustomDialogboxBinding.inflate(layoutInflater)
+        Dialog(this).apply {
+            setContentView(dialogboxBinding.root)
+            window?.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            val old_name: String = array[position].Email.toString()
+            val old_class: String = array[position].Etclass.toString()
+            val old_number: String = array[position].number.toString().toInt().toString()
+            var dialog = dialogboxBinding
+            dialog.etEmail.setText(old_name)
+            dialog.etClass.setText(old_class)
+            dialog.etNumber.setText(old_number)
+            dialogboxBinding.btnSave.setOnClickListener {
+                val data = Items(
+                    "",
+                    dialogboxBinding.etEmail.text.toString(),
+                    dialogboxBinding.etClass.text.toString(),
+                    dialogboxBinding.etNumber.text.toString().toInt()
+                )
+
+                db.collection("firestoreCollection").document(array[position].id ?: "").set(data)
+
+                db.collection("firestoreCollection").add(
+                    Items(
+                        dialogboxBinding.etEmail.text.toString(),
+                        dialogboxBinding.etClass.text.toString(),
+                        dialogboxBinding.etNumber.text.toString()
+                    )
+                ).addOnSuccessListener {
+                    Toast.makeText(this@MainActivity, "Success", Toast.LENGTH_SHORT).show()
+                }.addOnFailureListener {
+                    Toast.makeText(this@MainActivity, "Failure", Toast.LENGTH_SHORT).show()
+                }
+                dismiss()
+                recyclerAdapter.notifyDataSetChanged()
+
+            }
+            show()
+        }
     }
+
 
     override fun delete_data(items: Items, position: Int) {
         AlertDialog.Builder(this).apply {
