@@ -15,14 +15,13 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.firestore
-import com.google.firebase.firestore.toObject
 import com.karan.firestore.databinding.ActivityMainBinding
 import com.karan.firestore.databinding.CustomDialogboxBinding
 
 class MainActivity : AppCompatActivity(), Recycler_btn {
     lateinit var binding: ActivityMainBinding
     var array = ArrayList<Items>()
-    var recyclerAdapter = recyclerAdapter(array, this)
+    var recyclerAdapter = RecyclerAdapter(array, this)
     var db = Firebase.firestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,12 +33,12 @@ class MainActivity : AppCompatActivity(), Recycler_btn {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         var linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.recyclerList.layoutManager = linearLayoutManager
         binding.recyclerList.adapter = recyclerAdapter
         binding.recyclerList.setHasFixedSize(true)
 
+        recyclerAdapter.notifyDataSetChanged()
 
         binding.btnFab.setOnClickListener {
             var dialogboxBinding = CustomDialogboxBinding.inflate(layoutInflater)
@@ -106,6 +105,7 @@ class MainActivity : AppCompatActivity(), Recycler_btn {
 
 
     }
+
 
     private fun convertObject(snapshot: QueryDocumentSnapshot): Items? {
         val ItemModel: Items? = snapshot.toObject(Items::class.java)

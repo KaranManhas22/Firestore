@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Firestore</string>
+    <string name="default_notification_channel_id">default_notification_channel_id\n</string>
+    <string name="channel_description">channel_description\n</string>
 </resources>
