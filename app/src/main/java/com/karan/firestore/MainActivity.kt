@@ -27,18 +27,19 @@ class MainActivity : AppCompatActivity(), Recycler_btn {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
         var linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.recyclerList.layoutManager = linearLayoutManager
         binding.recyclerList.adapter = recyclerAdapter
         binding.recyclerList.setHasFixedSize(true)
 
         recyclerAdapter.notifyDataSetChanged()
+        setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
 
         binding.btnFab.setOnClickListener {
             var dialogboxBinding = CustomDialogboxBinding.inflate(layoutInflater)
